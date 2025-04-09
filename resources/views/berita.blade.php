@@ -75,6 +75,11 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+
+
+
+        
         .trending-news {
             border-left: 4px solid #3b82f6;
         }
