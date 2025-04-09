@@ -76,6 +76,10 @@
             transform: translateY(0);
         }
 
+
+
+
+        
         .trending-news {
             border-left: 4px solid #3b82f6;
         }
@@ -118,8 +122,6 @@
                             <span class="category-badge">Headline</span>
                             <span class="news-date">12 Juni 2023</span>
                         </div>
-
-                        
                         <div class="p-6 news-content">
                             <div class="flex items-center mb-3">
                                 <span class="text-sm text-gray-500">By Admin</span>
