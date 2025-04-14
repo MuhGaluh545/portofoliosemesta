@@ -9,17 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('proyeks', function (Blueprint $table) {
+        Schema::create('proyeks', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_proyek')->nullable();
             $table->string('location')->nullable();
             $table->integer('manpower')->nullable();
             $table->integer('duration')->nullable();
             $table->text('description')->nullable();
             $table->string('documentation')->nullable();
+            $table->timestamps();    
         });
     }
-    
 
     /**
      * Reverse the migrations.
@@ -27,7 +29,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('proyeks', function (Blueprint $table) {
-            //
+            $table->dropColumn(['nama_proyek','location', 'manpower', 'duration', 'description', 'documentation']);
         });
     }
 };
+
