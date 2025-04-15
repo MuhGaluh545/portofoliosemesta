@@ -69,7 +69,7 @@
 
 <body class="bg-gradient-to-r from-white to-blue-100 min-h-screen flex flex-col">
     <!-- Header/Navbar -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-white to-blue-400 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
