@@ -220,7 +220,7 @@
             <!-- Blog 1 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
                 <div class="relative h-56 w-full overflow-hidden">
-                    <img src="images/blog1.jpg" alt="Blog 1" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <img src="images/blog1.JPG" alt="Blog 1" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                         <span class="text-sm text-white">12 Maret 2025</span>
                     </div>
@@ -240,7 +240,7 @@
             <!-- Blog 2 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
                 <div class="relative h-56 w-full overflow-hidden">
-                    <img src="images/blog2.jpg" alt="Blog 2" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <img src="images/blog2.JPG" alt="Blog 2" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                         <span class="text-sm text-white">10 Maret 2025</span>
                     </div>
@@ -260,7 +260,7 @@
             <!-- Blog 3 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
                 <div class="relative h-56 w-full overflow-hidden">
-                    <img src="images/blog3.jpg" alt="Blog 3" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <img src="images/blog3.JPG" alt="Blog 3" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                         <span class="text-sm text-white">8 Maret 2025</span>
                     </div>
