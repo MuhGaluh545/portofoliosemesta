@@ -5,7 +5,7 @@
     <div class="relative w-full h-screen max-h-[80vh] overflow-hidden">
         <!-- Slides -->
         <div class="absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out z-10" id="slide1">
-            <img src="images/hero-images.jpg" alt="Hero Image 1" class="w-full h-full object-cover">
+            <img src="images/hero-images.JPG" alt="Hero Image 1" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center pointer-events-none">
                 <div class="text-center px-4 transform transition-all duration-1000 pointer-events-auto" data-aos="fade-up">
                     <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Inovasi Tanpa Batas</h1>
@@ -19,7 +19,7 @@
         </div>
         
         <div class="absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out pointer-events-none" id="slide2">
-            <img src="images/hero-images1.jpg" alt="Hero Image 2" class="w-full h-full object-cover">
+            <img src="images/hero-images1.JPG" alt="Hero Image 2" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center pointer-events-none">
                 <div class="text-center px-4 pointer-events-auto">
                     <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Solusi Terintegrasi</h1>
@@ -29,7 +29,7 @@
         </div>
         
         <div class="absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out pointer-events-none" id="slide3">
-            <img src="images/hero-images2.jpg" alt="Hero Image 3" class="w-full h-full object-cover">
+            <img src="images/hero-images2.JPG" alt="Hero Image 3" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center pointer-events-none">
                 <div class="text-center px-4 pointer-events-auto">
                     <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Teknologi Masa Depan</h1>
