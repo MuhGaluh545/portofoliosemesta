@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero Section with Auto Slider - Mobile Optimized -->
-    <div class="relative w-full h-[60vh] md:h-screen md:max-h-[80vh] overflow-hidden">
+    <div class="relative w-full -mt-6 h-[60vh] md:-mt-8 md:h-screen md:max-h-[80vh] overflow-hidden">
         <!-- Slides -->
         <div class="absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out z-10" id="slide1">
             <img src="images/hero-images.JPG" alt="Hero Image 1" class="w-full h-full object-cover">
