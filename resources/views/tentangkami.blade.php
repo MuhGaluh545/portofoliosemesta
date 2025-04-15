@@ -520,7 +520,8 @@ document.addEventListener('DOMContentLoaded', function() {
     AOS.init({
         duration: 800,
         easing: 'ease-in-out',
-        once: true
+        once: true,
+        disable: window.innerWidth < 768 // Disable animations on mobile for better performance
     });
 
     // ====================== TESTIMONIAL SLIDER ======================
@@ -571,9 +572,11 @@ document.addEventListener('DOMContentLoaded', function() {
             goToSlide(currentIndex - 1);
         }
         
-        // Start auto slide
+        // Start auto slide only on desktop
         function startAutoSlide() {
-            autoSlideInterval = setInterval(nextSlide, slideIntervalTime);
+            if (window.innerWidth >= 768) { // Only auto-slide on desktop
+                autoSlideInterval = setInterval(nextSlide, slideIntervalTime);
+            }
         }
         
         // Reset auto slide timer
@@ -601,28 +604,100 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Pause on hover
-        testimonialSlider.addEventListener('mouseenter', () => {
-            clearInterval(autoSlideInterval);
-        });
-        
-        // Resume on mouse leave
-        testimonialSlider.addEventListener('mouseleave', startAutoSlide);
-        
         // Initialize slider
         updateSlider();
         startAutoSlide();
         
         // Handle window resize
-        window.addEventListener('resize', updateSlider);
+        window.addEventListener('resize', function() {
+            updateSlider();
+            // Restart auto slide if resizing between mobile/desktop
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        });
+    }
+
+    // ====================== SIDEBAR MENU FOR MOBILE ======================
+    function setupMobileSidebar() {
+        const sidebar = document.getElementById('about-sidebar');
+        if (!sidebar) return;
+
+        // Convert sidebar to dropdown on mobile
+        if (window.innerWidth < 768) {
+            const nav = sidebar.querySelector('nav');
+            const h2 = sidebar.querySelector('h2');
+            
+            // Create dropdown select element
+            const select = document.createElement('select');
+            select.className = 'w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 mb-4';
+            
+            // Add options from nav links
+            const links = nav.querySelectorAll('a');
+            links.forEach(link => {
+                const option = document.createElement('option');
+                option.value = link.getAttribute('href');
+                option.textContent = link.textContent;
+                select.appendChild(option);
+            });
+            
+            // Handle selection change
+            select.addEventListener('change', function() {
+                const targetId = this.value;
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80, // Adjusted for mobile header
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without triggering scroll
+                    history.replaceState(null, null, targetId);
+                }
+            });
+            
+            // Replace nav with select on mobile
+            nav.remove();
+            sidebar.insertBefore(select, h2.nextSibling);
+            
+            // Make sidebar sticky but not full height on mobile
+            sidebar.classList.remove('h-screen', 'sticky', 'top-0');
+            sidebar.classList.add('sticky', 'top-16', 'z-10', 'bg-white', 'shadow-md');
+        } else {
+            // Restore original nav on desktop
+            const select = sidebar.querySelector('select');
+            if (select) {
+                const nav = document.createElement('nav');
+                nav.className = 'space-y-2';
+                
+                // Recreate links from options
+                const options = select.querySelectorAll('option');
+                options.forEach(option => {
+                    const link = document.createElement('a');
+                    link.href = option.value;
+                    link.textContent = option.textContent;
+                    link.className = 'block py-2 px-4 rounded hover:bg-blue-50 text-gray-700 transition-colors duration-200 sidebar-link';
+                    nav.appendChild(link);
+                });
+                
+                select.remove();
+                sidebar.querySelector('h2').after(nav);
+                
+                // Restore sidebar styling
+                sidebar.classList.add('h-screen', 'sticky', 'top-0');
+                sidebar.classList.remove('top-16', 'z-10');
+            }
+        }
     }
 
     // ====================== SIDEBAR ACTIVATION ======================
-    const aboutPage = document.getElementById('about-page');
-    if (aboutPage) {
+    function setupSidebarNavigation() {
+        const aboutPage = document.getElementById('about-page');
+        if (!aboutPage) return;
+
         const sections = document.querySelectorAll('#about-page section');
-        const sidebarLinks = document.querySelectorAll('#about-sidebar .sidebar-link');
-        const headerHeight = 100; // Adjust based on your header height
+        const sidebarLinks = document.querySelectorAll('#about-sidebar .sidebar-link, #about-sidebar select');
+        const headerHeight = window.innerWidth < 768 ? 80 : 100; // Smaller offset for mobile
 
         // Update active sidebar link
         function updateActiveSidebar() {
@@ -638,36 +713,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            sidebarLinks.forEach(link => {
-                const linkHref = link.getAttribute('href').substring(1);
-                if (linkHref === currentSection) {
-                    link.classList.add('text-blue-600', 'font-medium');
-                    link.classList.remove('text-gray-700');
-                } else {
-                    link.classList.remove('text-blue-600', 'font-medium');
-                    link.classList.add('text-gray-700');
+            // Handle both desktop links and mobile select
+            if (window.innerWidth >= 768) {
+                sidebarLinks.forEach(link => {
+                    if (link.tagName === 'A') {
+                        const linkHref = link.getAttribute('href').substring(1);
+                        if (linkHref === currentSection) {
+                            link.classList.add('text-blue-600', 'font-medium');
+                            link.classList.remove('text-gray-700');
+                        } else {
+                            link.classList.remove('text-blue-600', 'font-medium');
+                            link.classList.add('text-gray-700');
+                        }
+                    }
+                });
+            } else {
+                const select = document.querySelector('#about-sidebar select');
+                if (select) {
+                    const options = select.options;
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].value.substring(1) === currentSection) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
                 }
-            });
+            }
         }
 
-        // Smooth scrolling with offset
-        sidebarLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    window.scrollTo({
-                        top: targetSection.offsetTop - headerHeight,
-                        behavior: 'smooth'
-                    });
+        // Smooth scrolling with offset for desktop
+        if (window.innerWidth >= 768) {
+            document.querySelectorAll('#about-sidebar .sidebar-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
                     
-                    // Update URL without triggering scroll
-                    history.replaceState(null, null, targetId);
-                }
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - headerHeight,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update URL without triggering scroll
+                        history.replaceState(null, null, targetId);
+                    }
+                });
             });
-        });
+        }
 
         // Check initial hash on page load
         function checkInitialHash() {
@@ -732,16 +825,93 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ====================== RESPONSIVE ADJUSTMENTS ======================
     function handleResponsiveChanges() {
-        // Add any responsive adjustments here if needed
+        setupMobileSidebar();
+        setupSidebarNavigation();
+        
+        // Adjust carousel navigation buttons for mobile
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        if (window.innerWidth < 768) {
+            if (prevBtn) prevBtn.classList.add('hidden');
+            if (nextBtn) nextBtn.classList.add('hidden');
+        } else {
+            if (prevBtn) prevBtn.classList.remove('hidden');
+            if (nextBtn) nextBtn.classList.remove('hidden');
+        }
     }
 
-    // Initial call and event listener for resize
+    // Initial setup
     handleResponsiveChanges();
-    window.addEventListener('resize', handleResponsiveChanges);
+    
+    // Re-run setup on window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            handleResponsiveChanges();
+        }, 250);
+    });
 });
 </script>
 
 <style>
+/* Custom CSS for responsive design */
+@media (max-width: 767px) {
+    /* Adjust hero section for mobile */
+    .bg-gradient-to-r.from-blue-600.to-blue-800 {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+    
+    /* Make sidebar more compact on mobile */
+    #about-sidebar {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Adjust team member cards for mobile */
+    .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3.gap-10 {
+        gap: 1.5rem;
+    }
+    
+    /* Improve testimonial spacing on mobile */
+    #testimoni .min-w-full.px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Hide dots on mobile if not needed */
+    #testimoni .flex.justify-center.mt-8.space-x-2 {
+        display: none;
+    }
+    
+    /* Adjust counter section for mobile */
+    .grid.grid-cols-2.md\:grid-cols-4.gap-8 {
+        gap: 1.5rem;
+    }
+    
+    /* Make final CTA buttons stack vertically on mobile */
+    .flex.flex-col.sm\:flex-row.justify-center.gap-4 {
+        gap: 0.75rem;
+    }
+    
+    /* Reduce padding in sections for mobile */
+    section.py-12 {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    
+    /* Adjust font sizes for mobile */
+    h1.text-4xl.md\:text-5xl {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+    
+    h2.text-3xl {
+        font-size: 1.75rem;
+    }
+}
+
 /* Custom CSS for active sidebar link */
 #about-sidebar .sidebar-link.active,
 #about-sidebar .sidebar-link:hover {
