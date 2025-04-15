@@ -27,7 +27,7 @@
             <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
                 <!-- Logo -->
                 <div class="flex items-center space-x-2">
-                <img src="{{ asset('images/Logo_semesta.png') }}" alt="Logo" class="h-10 w-30">
+                <img src="{{ asset('images/logo_semesta.jpeg') }}" alt="Logo" class="h-10 w-30">
                 </div>
 
                 <!-- Tombol Menu untuk Mobile -->
