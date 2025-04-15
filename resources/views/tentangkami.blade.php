@@ -2,8 +2,8 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-    <div class="container mx-auto px-6 text-center">
+<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white pt-0 pb-20 -mt-4">
+    <div class="container mx-auto px-6 text-center pt-8 md:pt-12">
         <h1 class="text-4xl md:text-5xl font-bold mb-6">Membangun Koneksi, Menciptakan Masa Depan</h1>
         <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Kami adalah mitra terpercaya dalam solusi infrastruktur telekomunikasi di Indonesia</p>
         <a href="#visi" class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
