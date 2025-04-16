@@ -73,7 +73,11 @@
                 <!-- Project Image -->
                 <div class="relative h-48 sm:h-64 overflow-hidden">
                     @if($proyek->documentation)
+<<<<<<< HEAD
                     <img src="{{ url('storage/dokumentasi/' . $proyek->documentation) }}" alt="{{ $proyek->nama_proyek }}" 
+=======
+                        <img src="{{ asset('storage/' . $proyek->documentation) }}" alt="{{ $proyek->nama_proyek }}" 
+>>>>>>> parent of ec3521b (/dokumentasi)
                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                     @else
                         <div class="w-full h-full bg-gray-200 flex items-center justify-center">
