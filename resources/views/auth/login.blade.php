@@ -2,7 +2,7 @@
     <!-- Logo -->
     <div class="flex justify-center mb-6">
         <a href="/">
-            <img src="{{ asset('images/Logo_semesta.png') }}" alt="Logo" class="w-30 h-20">
+            <img src="{{ asset('images/logo_semesta.png') }}" alt="Logo" class="w-30 h-20">
         </a>
     </div>
 
