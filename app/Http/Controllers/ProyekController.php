@@ -37,7 +37,7 @@ class ProyekController extends Controller
             'manpower' => 'required|integer',
             'duration' => 'required|integer',
             'description' => 'required|string',
-            'documentation' => 'nullable|file|mimes:jpg,jpeg,png,pdf,rar,zip,doc,docx|max:2048'
+            'documentation' => 'nullable|file|mimes:jpg,jpeg,png,pdf,rar,zip,doc,docx'
         ]);
 
         $data = $request->all();
