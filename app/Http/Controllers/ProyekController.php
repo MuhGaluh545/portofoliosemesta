@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Proyek;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Storage;
 
 class ProyekController extends Controller
 {
@@ -13,8 +13,11 @@ class ProyekController extends Controller
      */
     public function index(Request $request)
     {
+        // Ambil kata kunci pencarian dari request
         $search = $request->input('search');
-        $proyeks = Proyek::paginate(10);
+
+        // Query untuk mencari data proyek
+        $proyeks = Proyek::paginate(10); // 10 item per halaman
         return view('proyek.index', compact('proyeks'));
     }
 
@@ -42,9 +45,9 @@ class ProyekController extends Controller
 
         $data = $request->all();
 
+        // Simpan file jika ada
         if ($request->hasFile('documentation')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('documentation')->getRealPath())->getSecurePath();
-            $data['documentation'] = $uploadedFileUrl;
+            $data['documentation'] = $request->file('documentation')->store('dokumentasi', 'public');
         }
 
         Proyek::create($data);
@@ -84,9 +87,14 @@ class ProyekController extends Controller
 
         $data = $request->all();
 
+        // Update file dokumentasi jika ada
         if ($request->hasFile('documentation')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('documentation')->getRealPath())->getSecurePath();
-            $data['documentation'] = $uploadedFileUrl;
+            // Hapus file lama jika ada
+            if ($proyek->documentation) {
+                Storage::disk('public')->delete($proyek->documentation);
+            }
+            // Simpan file baru
+            $data['documentation'] = $request->file('documentation')->store('documentations', 'public');
         }
 
         $proyek->update($data);
@@ -99,7 +107,13 @@ class ProyekController extends Controller
      */
     public function destroy(Proyek $proyek)
     {
+        // Hapus file dokumentasi jika ada
+        if ($proyek->documentation) {
+            Storage::disk('public')->delete($proyek->documentation);
+        }
+
         $proyek->delete();
+
         return redirect()->route('proyek.index')->with('success', 'Proyek berhasil dihapus.');
     }
 }
